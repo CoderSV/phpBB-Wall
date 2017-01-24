@@ -21,7 +21,7 @@ Features:
 * Change profile cover.
 * HTML5 music player
 * Upload/remove songs to your profile
-* ACP switch to replace core phpbb profile (Pretty URLs / i.e http://phpbbwall.com/wall/test)
+* ACP switch to replace core phpbb profile (Pretty URLs / i.e http://phpbb.com/wall/test)
 
 Other features
 
