@@ -27,6 +27,8 @@ Other features
 
 * Prosilver css used for statuses divs.
 
+[Screenshot](http://imgur.com/a/UJoeT)
+
 ## License
 
 [GPLv2](license.txt)
