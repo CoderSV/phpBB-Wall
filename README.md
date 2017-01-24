@@ -1,4 +1,4 @@
-# phpBB 3.1 Extension - phpBB Wall
+# phpBB 3.1 & 3.2 Extension - phpBB Wall
 
 ## Installation
 
