@@ -24,7 +24,7 @@ $lang = array_merge($lang, array(
 
 	'WALL_PAGE'			=> 'Mural',
 	'WALL_MAIN'			=> 'Página Principal',	
-	'WALL_NOSET'		=> 'Não configurado',	
+	'WALL_NOSET'		=> 'Não informado',	
 	
 
 	'WALL_ABOUT_BLOCK'              => 'Sobre mim',	
@@ -73,7 +73,7 @@ $lang = array_merge($lang, array(
 	'ACP_WALL_PROFILE'		         	=> 'Usar perfil do phpBB Wall',
 	'ACP_WALL_PROFILE_EXPLAIN'  	 	=> 'Substite o sistema de perfil padrão do phpBB.',
 	'ACP_WALL_MUSIC_ENABLED'		    => 'Permitir que os usuários façam upload e compartilhem música',
-	'ACP_WALL_MUSIC_ENABLED_EXPLAIN'    => 'PHP post_max_size deve ser definido maior do que 8M, 20M vai funcionar muito para o upload de música.',
+	'ACP_WALL_MUSIC_ENABLED_EXPLAIN'    => 'PHP post_max_size deve ser definido maior do que 8M, 20M vai funcionar muito bem para o upload de música.',
 
 	'ACP_WALL_STATUS'	             	=> 'Configurações de status',	 
 	'ACP_WALL_STATUS_SMILIES' 	        => 'Permitir smilies no status',  
