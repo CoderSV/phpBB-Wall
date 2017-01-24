@@ -12,8 +12,8 @@
 
 <form id="acp_board" method="post" action="{U_ACTION}">
 	<!-- IF WALL_MAIN -->  
-    <h1>{L_ACP_WALL_GENERAL}</h1>
     <fieldset>
+	<legend>{L_ACP_WALL_GENERAL}</legend> 
 		<dl>
 			<dt><label for="wall_enabled">{L_ACP_WALL_ENABLED}</label></dt>
 			<dd><input type="radio" class="radio" name="wall_enabled" value="1" <!-- IF WALL_ENABLED -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
@@ -57,7 +57,7 @@
        <!-- ENDIF -->
        <!-- IF WALL_CMT -->         
        <fieldset> 
-       <h1>{L_ACP_WALL_COMMENTS}</h1>
+	   <legend>{L_ACP_WALL_COMMENTS}</legend> 
            <dl>
 			<dt><label for="wall_cmt_edit">{L_ACP_WALL_CMT_EDIT}</label><br />
             <span>{L_ACP_WALL_CMT_EDIT_EXPLAIN}</span></dt>
@@ -89,7 +89,7 @@
     <!-- ENDIF -->
            <!-- IF WALL_BLOCKS -->         
        <fieldset> 
-       <h1>{L_ACP_WALL_BLOCKS}</h1>
+       <legend>{L_ACP_WALL_BLOCKS}</legend>
        	<dl>
 			<dt><label for="wall_blocks_new_users">{L_ACP_WALL_BLOCKS_NEW_USERS}</label></dt>
 			<dd><input type="radio" class="radio" name="wall_blocks_new_users" value="1" <!-- IF WALL_BLOCKS_NEW_USERS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;

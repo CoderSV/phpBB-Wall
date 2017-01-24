@@ -118,8 +118,9 @@ $lang = array_merge($lang, array(
 	
 	
 	// WALL notifications
-    'NOTIFICATION_TYPE_WALL_STATUS'	  => 'Status do Mural',	 
-    'NOTIFICATION_TYPE_WALL_LIKES'    => 'Curtidas do Mural',		
+    'NOTIFICATION_TYPE_WALL_COMMENTS' => 'Comentários no Mural',	 
+    'NOTIFICATION_TYPE_WALL_STATUS'	  => 'Status no Mural',	 
+    'NOTIFICATION_TYPE_WALL_LIKES'    => 'Curtidas no Mural',		
 	'NOTIFICATION_WALL_ADD_STATUS'	  => '%1$s Adicionou algo ao seu mural "%2$s"',		
 	'NOTIFICATION_WALL_ADD_CMT'	      => '%1$s comentou seu status "%2$s"',
 	'NOTIFICATION_WALL_LIKE_STATUS'	  => '%1$s curtiu o seu status "%2$s"',

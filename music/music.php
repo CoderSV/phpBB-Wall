@@ -68,7 +68,7 @@ class music
 		
 	}
 
-     public function add_music($files)
+    public function add_music($files)
 	{
 	$tempFile = $files['tmp_name'];
 	$fileName = $files['name'];

@@ -4,7 +4,7 @@
 	"description": "Wall Extension for phpBB 3.1 & 3.2",
 	"homepage": "https://suportephpbb.com.br",
 	"version": "1.0.0",
-	"time": "2014-11-05",
+	"time": "2014-01-24",
 	"license": "GPL-2.0",
 	"authors": [{
 			"name": "Saulo Henrique",
@@ -21,7 +21,13 @@
 	"extra": {
 		"display-name": "phpBB Wall Extension",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.1.0-RC2,<3.2.*@dev"
+			"phpbb/phpbb": ">=3.1.0,<3.2.*@dev"
+		},
+		"version-check": {
+			"host": "msaulohenrique.github.io",
+			"directory": "/verificar_versao",
+			"filename": "phpwall.json",
+			"ssl":true
 		}
 	}
 }

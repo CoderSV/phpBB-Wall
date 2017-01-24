@@ -64,7 +64,7 @@ $lang = array_merge($lang, array(
 	// WALL ACP
 	
 	'ACP_WALL_TITLE'				 	=> 'phpBB Wall',
-	'ACP_WALL_SETTINGS_EXPLAIN' 	 	=> 'This is the configuration page for the “phpBB Wall extension” MOD by premiumphpbb.com.',
+	'ACP_WALL_SETTINGS_EXPLAIN' 	 	=> 'This is the configuration page for the “phpBB Wall extension”.',
 	'ACP_WALL_VERSION'          	 	=> 'Extension version',
 	'ACP_WALL_GENERAL'		         	=> 'General settings',
 	'ACP_WALL_ENABLED'				 	=> 'Enable phpBB Wall',
@@ -117,6 +117,7 @@ $lang = array_merge($lang, array(
 	
 	
 	// WALL notifications
+	'NOTIFICATION_TYPE_WALL_COMMENTS' => 'Wall comments',	 
     'NOTIFICATION_TYPE_WALL_STATUS'	  => 'Wall status',	 
     'NOTIFICATION_TYPE_WALL_LIKES'    => 'Wall likes',		
 	'NOTIFICATION_WALL_ADD_STATUS'	  => '%1$s added something to your wall "%2$s"',		

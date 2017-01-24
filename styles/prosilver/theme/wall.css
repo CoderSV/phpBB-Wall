@@ -20,12 +20,6 @@ body {
   src: url("./images/fonts/arista.ttf");
 }
 
-.icon-wall {
-	background-position: 0 50%;
-	background-repeat: no-repeat;
-	padding: 1px 0 0 17px;
-	background-image: url("./images/wall.png");
-}
  /*!
   
 MODAL SIZES
@@ -799,7 +793,7 @@ margin: 10px 0 0px 1px;
 .wall-blocks-header{
 	margin: 0px; 
 	border-radius: 7px 7px 0 0; 
-/*	background-image: url("./images/bg_list.png");*/
+	background-image: url("./images/bg_list.png");
 }
 
 .wall-block-newUsers{
@@ -923,7 +917,6 @@ margin: 10px 0 0px 1px;
     left: 0;
     text-align: center;
     text-shadow: -1px 1px 0 #FFFFFF;
-    text-transform: capitalize;
     width: 200px;
     z-index: 1;
 }
@@ -998,15 +991,6 @@ margin: 10px 0 0px 1px;
     width: 9px;
 }	
 
-
-
-.wall-user-online{
-    background: url("./images/wall-user-online.png")  no-repeat;
-    display: inline-block;
-    height: 12px;
-	padding:1px;
-    width: 12px;
-}
 
 .wall-friends-info {
     margin-left: 5px;
@@ -1656,9 +1640,7 @@ border-top-right-radius:4px;
 .wall-profile-info-section h1{
     color: inherit;
     display: inline-table;
-    font-family: Arista;
     font-size: 25px;
-    text-transform: capitalize;
     white-space: nowrap;
 }
 
