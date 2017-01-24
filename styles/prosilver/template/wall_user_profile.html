@@ -1,0 +1,101 @@
+<div class="wall-main">
+  <div class="wall-main-profile">
+   <div class="wall-profile-header">
+   <!-- IF not S_ON_PHPBB_PROFILE -->
+    <div class="wall-profile-cover">
+     <img src="{PROFILE_BANNER_IMG}" ng-hide="cover.link" style="margin-top:calc({PROFILE_BANNER_TOP}px + <[coverHeight]>%); width:100%;" class="coverUpdated" my-cover/> 
+     <img-cropped ng-model="cover.link" src="<[cover.link]>" style="width:100%;" id="<[cover.id]>" user="{U_USER_WALL}" ng-show="cover.link" class="crop_me" >
+     </img-cropped>
+     <input type="hidden" id="cover-lang" value="{L_WALL_PROFILE_COVER_DRAG}"  />
+    </div>
+    <div class="wall-profile-avatar">{S_WALL_PROFILE_AVATAR}</div>
+     <!-- IF S_OWN_PROFILE -->
+    <div class="btn-group wall-banner-edit" ng-hide="cover.link" dropdown>
+     <button data-toggle="dropdown" type="button" class="btn btn-default btn-sm dropdown-toggle">
+     <i class="glyphicon glyphicon-edit"></i>
+     </button>
+     <ul class="dropdown-menu">
+      <li><a href="{U_PROFILE_AVATAR}">{L_UCP_PROFILE_AVATAR}</a></li>
+      <li><a href="javascript:void(0);" ng-click="updateCover()">{L_WALL_PROFILE_UPDATE_COVER}</a></li>
+     </ul>
+    </div>
+      <!-- ENDIF -->
+    <div class="wall-profile-actions">
+       <!-- IF S_ZEBRA -->
+     <a href="javascript:void(0);" ng-hide="newAction" class="btn btn-default btn-sm" ng-click="friendAction()">
+     <i class="glyphicon glyphicon-{WALL_FRIEND_ACT_ICON}"></i> 
+       <span class="wall-profile-actions-text">{WALL_FRIEND_ACTION}</span>
+       </a>
+     <a href="javascript:void(0);" ng-show="newAction" class="btn btn-default btn-sm" ng-click="friendAction()">
+     <i class="glyphicon <[friend_action_icon]>"></i> <[friend_action_text]>
+     </a>
+      <!-- ENDIF -->
+     <!-- IF not S_OWN_PROFILE and U_PM -->
+     <a href="{U_PM}" class="btn btn-default btn-sm" ng-click="sendPM()">
+     <i class="glyphicon glyphicon glyphicon-envelope"></i> 
+     <span class="wall-profile-actions-text">{L_SEND_PRIVATE_MESSAGE}</span>
+     </a>
+     <!-- ENDIF -->
+    </div>
+        <div class="wall-profile-info-section">
+     <!-- IF S_ONLINE -->
+     <i class="wall-user-online"></i>
+     <!-- ENDIF -->
+     <h1> {WALL_USERNAME}</h1>    
+    </div>
+    
+   <!-- ENDIF -->
+   <ul class="wall-profile-tabs nav nav-tabs">
+    <li ng-class="getTabClass(1)" ng-click="openTabs(1)" ng-model="radioModel" btn-radio="'1'">
+    <a href="javascript:void(0);"><i class="glyphicon glyphicon-list-alt"></i> <span class="wall-profile-tabs-l">{L_WALL_TAB_MAIN}</span></a>
+    </li>
+<!--    <li ng-class="getTabClass(2)" ng-click="infoTab(2)" ng-model="radioModel" btn-radio="'2'">
+    <a href="javascript:void(0);"><i class="glyphicon glyphicon-info-sign"></i> <span class="wall-profile-tabs-l">{L_WALL_TAB_INFO} </span></a>
+    </li>-->
+    <li ng-class="getTabClass(3)" ng-click="friendsTab(3)" ng-model="radioModel" btn-radio="'3'">
+    <a href="javascript:void(0);"><i class="glyphicon glyphicon glyphicon-user"></i> <span class="wall-profile-tabs-l">{L_WALL_TAB_FRIENDS} <span class="badge">{WALL_TOTAL_FRIENDS}</span></span></a>
+    </li>
+     <li ng-class="getTabClass(4)" ng-click="photosTab(4)" ng-model="radioModel" btn-radio="'4'">
+     <a href="javascript:void(0);"><i class="glyphicon glyphicon-picture"></i> <span class="wall-profile-tabs-l">{L_WALL_TAB_PHOTOS} <span class="badge">{WALL_TOTAL_PHOTOS}</span></span></a> 
+     </li>
+      <!-- IF WALL_MUSIC_ENABLED -->
+     <li ng-class="getTabClass(5)" ng-click="musicTab(5)" ng-model="radioModel" btn-radio="'5'">
+     <a href="javascript:void(0);"><i class="glyphicon glyphicon-music"></i> <span class="wall-profile-tabs-l">{L_WALL_TAB_MUSIC}</span></a> 
+     </li>
+     <!-- ENDIF -->
+      </ul>
+    
+    </div>
+    
+ 
+    
+  <div class="wall-profile-columnMain tab-content">
+  
+   <div class="btn-group-tabs" ng-hide="openTab1">
+      <div class="wall-profile-columnLeft">
+ <!-- INCLUDE wall_user_about_block.html -->
+    </div>  
+     <div class="wall-profile-columnCenter">
+    <!-- INCLUDE wall_status.html -->
+     </div>
+ </div>
+ 
+ 
+    <div class="btn-group-tabs" ng-show="openTab==2"> </div>
+    <div class="btn-group-tabs" ng-show="openTab==3"> 
+    <!-- INCLUDE wall_user_friends_tab.html -->
+    </div>
+    <div class="btn-group-tabs" ng-show="openTab==4">
+    <!-- INCLUDE wall_user_photos_tab.html -->
+    </div>
+       <!-- IF WALL_MUSIC_ENABLED -->   
+      <div class="btn-group-tabs" ng-show="openTab==5">
+    <!-- INCLUDE wall_user_music_tab.html -->
+    </div>
+      <!-- ENDIF -->
+  </div>  
+<!-- closing columnCenter -->
+
+
+ </div>
+</div>

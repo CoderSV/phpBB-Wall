@@ -1,0 +1,17 @@
+<div class="post bg2 wall-blocks">
+ <div class="wall-blocks-header">
+			<ul class="topiclist">
+			<li class="wall-profile-block-h">
+				<h3>{L_WALL_ABOUT_BLOCK}</h3>
+			</li>
+            </ul>
+ </div>
+     <ul class="wall-profile-info-items">
+     <li><strong><i class="glyphicon glyphicon-map-marker"></i> {L_LOCATION}:</strong><!-- IF LOCATION --> {LOCATION}<!-- ELSE --> {L_WALL_NOSET}<!-- ENDIF --></li>
+     <li> <strong><i class="glyphicon glyphicon-briefcase"></i> {L_OCCUPATION}:</strong><!-- IF OCCUPATION --> {OCCUPATION}<!-- ELSE --> {L_WALL_NOSET}<!-- ENDIF --></li>
+     <li><strong><i class="glyphicon glyphicon-globe"></i> {L_WEBSITE}:</strong><!-- IF WEBSITE --> {WEBSITE}<!-- ELSE --> {L_WALL_NOSET}<!-- ENDIF --></li>
+     <!-- IF FACEBOOK-->
+     <li> <strong><i class="glyphicon glyphicon-briefcase"></i> {L_FACEBOOK}:</strong> {FACEBOOK}</li>     
+     <!-- ENDIF -->
+    </ul>   
+ </div>

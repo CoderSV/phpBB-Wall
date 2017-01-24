@@ -1,0 +1,32 @@
+   <div class="post bg2 wall-blocks" ng-show="friendrequest">
+    <div class="forabg wall-blocks-header">
+	 <ul class="topiclist">
+	  <li class="header">
+	   <dl>
+	    <dt>{L_WALL_FRIENDS_BLOCK}</dt>
+	   </dl>
+	  </li>
+     </ul>
+    </div>
+    <div class="list-group">
+     <div class="list-group-item" ng-repeat="friend in friendrequest">
+      <div style="height: 40px;">
+       <span style="float: right;" compile="friend.avatar"></span>
+        <!-- Single button -->
+        <div style="float: left;">
+         <div class="btn-group" dropdown>
+          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+           <span compile="friend.name"></span> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+           <li><a href="javascript:void(0);" ng-click="requestAdd($index, friend)"><i class="glyphicon glyphicon-plus"></i> {L_WALL_FRIENDS_ACCEPT_REQ_SHORT} </a>
+           </li>
+           <li class="divider"></li>
+           <li><a href="javascript:void(0);" ng-click="requestRemove($index, friend)"><i class="glyphicon glyphicon-remove"></i> {L_WALL_FRIENDS_CANCEL_REQ_SHORT} </a>           </li>
+          </ul>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>

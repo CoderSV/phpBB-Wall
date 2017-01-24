@@ -1,0 +1,141 @@
+    <!-- MODALS -->
+   <script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+     <button type="button" class="close" ng-click="modalOptions.close();">&times;</button>
+     <h4 class="modal-title"><[modalOptions.headerText]></h4>
+    </div>
+    <div class="modal-body">
+	 <div class="modal-max-height">
+      <div class="wall-commentText" compile="modalOptions.bodyText | newlines"></div>
+     </div>
+     <div class="modal-footer">
+      <button class="btn btn-danger" ng-click="modalOptions.ok();"><[modalOptions.actionButtonText]></button>
+      <button class="btn btn-primary" ng-click="modalOptions.close();"><[modalOptions.closeButtonText]></button>
+     </div>
+	</div>
+   </script>
+    
+    <!-- Users autocomplete -->
+
+  <script type="text/ng-template" id="usersAutocomplete.html">
+   <a href="<[match.model.url]>">
+    <span compile="match.model.avatar"></span>
+    <span class="dropdown-users-result" bind-html-unsafe="match.model.name | typeaheadHighlight:query"></span>
+   </a>
+  </script>
+  
+ <!-- Users Likes -->
+ 
+  <script type="text/ng-template" id="loadLikes.html">
+   <div class="modal-header">
+    <button type="button" class="close" ng-click="modalOptions.close();">&times;</button>
+    <h4 class="modal-title"><[modalOptions.headerText]></h4>
+   </div>
+   <div class="modal-body">
+    <div class="modal-max-height">
+     <table style="width: 100%;">
+	  <tbody>
+	   <tr>
+        <td>
+		 <span class="wall-likeList-popup" ng-repeat="user in modalOptions.users"><p compile="user.avatar"></p><p compile="user.name"></p></span>
+		</td>
+	   </tr>
+	  </tbody>
+	 </table>
+    </div>
+   </div>
+   <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="modalOptions.close();"><[modalOptions.closeButtonText]></button>
+   </div>
+  </script> 
+  
+   <!-- Remove activity -->
+   
+   <script type="text/ng-template" id="removeActivity.html">
+    <div class="modal-header">
+     <button type="button" class="close" ng-click="modalOptions.close();">&times;</button>
+     <h4 class="modal-title"><[modalOptions.headerText]></h4>
+    </div>
+    <div class="modal-body">
+	 <div class="modal-max-height">
+      <div class="wall_updates">
+       <div class="wall-statusBox">
+ 	    <div class="wall-status-actions">
+	     <span class="wall-updates-avatar" compile="modalOptions.avatar"></span>	 
+	     <span class="wall-updates-username" compile="modalOptions.poster"></span>
+         <div class="wall-timestamp"><[modalOptions.time]></div>
+        </div>
+	    <div class="wall-status-textBox">
+		 <span class="wall-status-text" compile="modalOptions.msg"></span>
+	     <br />
+	     <img ng-show="modalOptions.image" src="<[modalOptions.image]>" width="200px" height="" />
+		</div>
+       </div>
+	  </div>
+     </div>
+    </div>
+    <div class="modal-footer">
+     <button class="btn btn-danger" ng-click="modalOptions.ok();"><i class="glyphicon glyphicon-trash"></i>  <[modalOptions.actionButtonText]></button>
+     <button class="btn btn-primary" ng-click="modalOptions.close();"><i class="glyphicon glyphicon-ban-circle"></i>    <[modalOptions.closeButtonText]></button>
+    </div>
+   </script>     
+
+
+
+   <!-- Cover form -->
+   
+   <script type="text/ng-template" id="coverForm.html">
+    <div class="wall-banner-options"> 
+	 <form ng-submit="submitCover()" style="position:static;">
+      <input type="hidden" name="id"  ng-model="id" value="<[cover.id]>" />
+	  <input type="hidden" name="top"  ng-model="top" value="<[cover.top]>" />
+      <input type="submit" class="btn btn-success wall-banner-send" value="{L_SUBMIT}">
+     </form>
+	 <button class="btn btn-danger wall-banner-cancel" ng-click="cancelCover()"><i class="glyphicon glyphicon-ban-circle"></i> {L_WALL_CANCEL}</button>
+    </div>
+   </script>
+   
+      <!-- Select cover -->
+      
+   <script type="text/ng-template" id="selectCover.html">
+    <div class="modal-header">
+     <button type="button" class="close" ng-click="cancel();">&times;</button>
+     <h4 ng-show="covers" class="modal-title">{L_WALL_PROFILE_PICK_COVER}</h4>
+    </div>
+    <div class="modal-body">
+	 <div class="modal-max-height">
+	  <p ng-hide="covers">{L_WALL_PROFILE_NO_COVER}</p>
+      <div ng-repeat="cover in covers">
+       <div class="wall-img-profile-b1" id="gallerybox<[cover.id]>">
+        <div class="wall-img-profile-b">
+         <div class="wall-img-viewer" cover="<[cover.name]>" id="<[cover.id]>" user="<[cover.poster]>" sid="<[cover.status]>">
+          <img ng-model="cover.link" src="<[cover.link]>" width="165px" height="150px" ng-click="showCover(cover);"/>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+	</div>
+    <div class="modal-footer"> 
+     <button class="btn btn-primary" ng-show="covers" ng-click="cancel()"><i class="glyphicon glyphicon-ban-circle"></i> {L_WALL_CANCEL}</button>
+    </div>
+   </script>
+   
+   
+     <!-- Select cover -->   
+    
+   <script type="text/ng-template" id="updateCover.html">
+    <div class="modal-header">
+	 <form ng-submit="resolveCover()">
+      <input type="hidden" id="img"  ng-model="cover.id" value="<[cover.id]>" />
+      <input type="hidden" id="user" ng-model="cover.user" value="{U_USER_WALL}" />
+	  <input type="hidden" id="top-cover" ng-model="cover.top" value="<[cover.top]>"/>
+	  <input type="hidden" id="top-left" ng-model="cover.left" value="<[cover.left]>"/>	
+      <input type="submit" class="btn btn-danger" ngClick="Submit" value"{L_SUBMIT}">
+     </form>
+	</div>
+    <div class="modal-body">
+     <img src="<[cover.link]>" class="crop_me" height="500px" width="auto" /></img>
+    </div>
+   </script>
+     

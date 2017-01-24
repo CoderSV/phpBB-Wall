@@ -1,0 +1,73 @@
+  <div class="wall-music-player"> 
+       <!-- IF S_OWN_PROFILE && S_USER_LOGGED_IN -->   
+       
+       
+           <div class="uploader">
+  <label for="musicUpload" title="{L_WALL_MUSIC_UPLOAD}" class="btn btn-sm btn-primary">
+  <i class="glyphicon glyphicon-arrow-up"></i> {L_WALL_MUSIC_UPLOAD}</label><br />
+  <input ng-hide="true" type="file" id="musicUpload" accept="audio/*" onchange="angular.element(this).scope().setMusic(this)" />
+  
+    </div>
+   <div ng-show="files">
+       <div ng-show="MusicprogressVisible">
+           <progressbar value="Musicprogress"><[Musicprogress]>%</progressbar>
+        </div>
+
+
+    </div>
+       
+       <!-- ENDIF -->	
+       <div class="player jp-interface"> 
+       
+  
+                
+                                 <!-- init soundManager2 player -->
+       <sound-manager></sound-manager>
+            
+      <div class="player-controls headerbar"> 
+           
+       <!--player-->
+   <div id="mep_0" class="mejs-container svg mejs-audio"><div class="mejs-inner">
+  <div class="mejs-controls">
+   <div class="mejs-container-play">
+   <i title="Pause" ng-show="isPlaying" class="glyphicon glyphicon-pause" pause-music></i>
+   <i title="Play" ng-show="!isPlaying" class="glyphicon glyphicon-play" play-music></i>
+   </div>
+   <div class="mejs-time-rail">
+   <span style="display: block; position: absolute; width: 100%;" class="mejs-time-total"><span style="display: none;" class="mejs-time-buffering"></span><span style="width: 100%;" class="mejs-time-loaded"></span>
+   <div class="mejs-title-text wall_marquee" ng-show="isPlaying">
+    <div> <[ currentPlaying.title ]> <!--by <[ currentPlaying.artist ]> --><span class="wall-player-timer-inside"> (<[ currentPostion ]> / <[ currentDuration ]>)</span></div>
+   </div>
+   <span ng-style="{width : ( progress + '%' ) }" class="mejs-time-current"></span>
+   <span style="left: -5px;" class="mejs-time-handle"></span><span style="display: none; left: 150.5px;" class="mejs-time-float"><span class="mejs-time-float-current"><[ currentPostion ]></span><span class="mejs-time-float-corner"></span></span></span></div>
+       <div class="wall-player-timer">(<[ currentPostion ]> / <[ currentDuration ]>)</div>
+  </div>
+  <div class="mejs-clear"></div></div></div>
+						
+				
+                 <!--player-->
+
+      </div> 
+     </div> 
+     
+     <p class="description"></p> 
+     
+     <div class="tracklist bg3">
+      <ol class="tracks">
+       <li ng-repeat="song in songs track by $index" class="track">
+       <span class="title" title="{L_WALL_MUSIC_PLAY}" music-player="play" add-song="song"><[ song.title ]></span>
+        <span class="duration"><[ song.date ]></span>
+          <!-- IF S_OWN_PROFILE && S_USER_LOGGED_IN --> 
+        <span class="delete bg2" ng-click="removeMusic(song, $index)"  title="{L_WALL_MUSIC_DELETE}"><i class="glyphicon glyphicon-remove"></i></span>
+         <!-- ELSE -->
+        <a href="<[ song.link ]>" class="download bg2" target="_self" title="{L_WALL_MUSIC_DOWNLOAD}" download="<[ song.title ]>">{L_WALL_MUSIC_DOWNLOAD}</a>
+         <!-- ENDIF -->	
+       </li>
+      </ol>
+     </div> 
+    </div> <!-- #players -->
+
+	 <!-- #content -->
+
+
+<div class="clear"></div>

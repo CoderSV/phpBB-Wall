@@ -1,0 +1,613 @@
+<script type="text/javascript">
+   function wallController($scope, $timeout, $http, $modal, $log, modalService)
+    { 
+     var userid= '{WALL_ID}';	
+     var root= '{WALL_PATH}';
+     
+	 if (('{S_ON_PROFILE}' || '{S_ON_PHPBB_PROFILE}' ||  '{S_ON_WALL}') == true)	{
+	 ///simulating loading
+	    $("#loading_indicator").show(); //show loading indicator image
+        $timeout(function () 
+		{
+		 $("#loading_indicator").hide(); //hide loading indicator image
+        }, 2000);
+	
+        $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+        $http({
+              method : "POST",
+              url : root,
+              data : "mode=getStatus&wall_id="+userid
+              }).success(function(data)
+			  {	  
+               $scope.statuses = (data == ('null' || "undefined" ||  null) ? [] : data);	
+              });
+      }
+ 
+      $scope.loadMore = function(status) {
+	   $("#loading_indicator").show(); //show loading indicator image
+       $http({
+             method : "POST",
+             url : root,
+             data : "mode=moreStatus&lstatus="+status.lstatus+"&wall_id="+status.wall_id
+            }).success(function(data)
+			{
+	         $("#loading_indicator").hide(); //hide loading indicator image   
+	         status.lstatus = false;
+	         if(data != ('null' || "undefined" ||  null))
+	           {
+	            for(i=0;i<data.length;i++)
+				{
+                $scope.statuses.push(data[i])
+                }
+			   }
+           });   
+      }
+
+      $scope.addStatus = function(status){
+      // Validate the status is not an empty and undefined
+       if("undefined" != status.msg){ 
+         $http({
+               method : "POST",
+               url : root,
+               data : "mode=addStatus&msg="+status.msg+"&type=1&wall_id="+userid
+              }).success(function(data)
+			  {
+               $scope.statuses.unshift(data);
+              });
+         $scope.status = "";
+       }
+      }
+
+      $scope.urlFetch = function(msg){
+       //url to match in the text field
+       match_url = new RegExp(
+       "^" +
+       // protocol identifier
+       "(?:(?:https?|ftp)://)" +
+       // user:pass authentication
+       "(?:\\S+(?::\\S*)?@)?" +
+       "(?:" +
+       // IP address exclusion
+       // private & local networks
+       "(?!(?:10|127)(?:\\.\\d{1,3}){3})"  +
+       "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})" +
+       "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})" +
+       // IP address dotted notation octets
+       // excludes loopback network 0.0.0.0
+       // excludes reserved space >= 224.0.0.0
+       // excludes network & broacast addresses
+       // (first & last IP address of each class)
+       "(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])" +
+       "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}" +
+       "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" +
+       "|" +
+       // host name
+       "(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)" +
+       // domain name
+       "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*" +
+       // TLD identifier
+       "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))" +
+       ")" +
+       // port number
+       "(?::\\d{2,5})?" +
+       // resource path
+       "(?:/[^\\s]*)?" +
+       "$", "i" 
+      );
+
+      var check_url = /\b(https?):\/\/([\-A-Z0-9.]+)(\/[\-A-Z0-9+&@#\/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#\/%=~_|!:,.;]*)?/i;	
+	  var extracted_url = [];
+	  if (msg & check_url) 
+	  { 
+       extracted_url = msg.match(check_url)[0]; //extract url from text 
+	  }
+	  if (match_url.test(extracted_url)) 
+	  { 
+	   $http({
+             method : "POST",
+             url : root,
+             data : "mode=urlFetch&url="+extracted_url
+            }).success(function(data)
+			{   
+             extracted_images = data.images;
+			 total_images = parseInt(data.images.length-1);
+			 img_arr_pos = total_images;
+			 if(total_images>0)
+			 {
+			  inc_image = '<div class="wall_fetch_url_thumb" id="wall_fetch_url_thumb"><img src="'+data.images[img_arr_pos]+'" width="100" height="100"></div>';
+			 }
+			 else{
+				  inc_image ='';
+				 }
+			 //content to be loaded in #results element
+			var content = '<div class="extracted_url">'+ inc_image +'<div class="extracted_content"><h4><a href="'+extracted_url+'" target="_blank">'+data.title+'</a></h4><p>'+data.content+'</p><div class="wall_fetch_url_thumb_sel"><span class="wall_fetch_url_prev_thumb" id="thumb_prev">&nbsp;</span><span class="wall_fetch_url_next_thumb" id="thumb_next">&nbsp;</span> </div><span class="wall_fetch_url_small_text" id="wall_fetch_url_total_imgs">'+img_arr_pos+' of '+total_images+'</span><span class="wall_fetch_url_small_text">&nbsp;&nbsp;Choose a Thumbnail</span></div></div>';
+					
+			//load results in the element
+			$("#wall_fetch_url_results").html(content).slideDown(); //show results with slide down effect
+			$("#loading_indicator").hide(); //hide loading indicator image
+           });
+       }
+      }
+	  //user clicks previous thumbail
+	  $("body").on("click","#wall_fetch_url_thumb_prev", function(e){		
+	  if(img_arr_pos>0) 
+		{
+		 img_arr_pos--; //thmubnail array position decrement
+		 //replace with new thumbnail
+		 $("#wall_fetch_url_thumb").html('<img src="'+extracted_images[img_arr_pos]+'" width="100" height="100">');
+		//show thmubnail position
+		 $("#wall_fetch_url_total_imgs").html((img_arr_pos) +' of '+ total_images);
+		}
+	  });
+	  //user clicks next thumbail
+	  $("body").on("click","#wall_fetch_url_thumb_next", function(e){		
+	   if(img_arr_pos<total_images)
+		{
+		 img_arr_pos++; //thmubnail array position increment
+		 //replace with new thumbnail
+		 $("#wall_fetch_url_thumb").html('<img src="'+extracted_images[img_arr_pos]+'" width="100" height="100">');
+		//replace thmubnail position text
+		 $("#wall_fetch_url_total_imgs").html((img_arr_pos) +' of '+ total_images);
+		}
+	  });
+
+      $scope.likeStatus = function(status){
+       $http({
+             method : "POST",
+             url : root,
+             data : "mode=likeStatus&id="+status.id+"&msg="+status.msg+"&type="+status.type+"&wall_id="+status.wall_id
+            }).success(function(data)
+			{
+             // Like info
+             status.likes = (data.likes);
+             status.ltext = (data.ltext);
+             status.limg  = (data.limg);
+            });
+      }
+	  
+      $scope.deleteStatus = function(status, index){	
+       var modalDefaults = {
+                            templateUrl: 'removeActivity.html'
+                           }
+       var modalOptions = {
+                           closeButtonText: '{L_WALL_CANCEL}',
+                           actionButtonText: '{L_WALL_DELETE}',
+                           headerText: '{L_WALL_STATUS_DELETE_INFO}',
+                           avatar: status.avatar,
+		                   poster: status.poster,	 
+		                   time: status.time,
+		                   msg: status.msg,
+		                   image: status.image,
+	   
+                          }
+       modalService.showModal(modalDefaults, modalOptions).then(function (result) 
+	   {
+        if (result === 'ok') 
+		{
+         // Angular AJAX call
+         $http({
+               method : "POST",
+               url : root,
+               data: "mode=deleteStatus&id="+status.id+"&type="+status.type+"&wall_id="+status.wall_id
+              }).success(function(data){
+               // Removing Data from Global DOM
+                 $scope.statuses.splice(index,1);
+                });
+         }
+        });
+       }
+
+       $scope.loadLikes = function(status){
+        $("#loading_indicator").show(); //show loading indicator image
+        $http({
+              method : "POST",
+              url : root,
+              data : "mode=loadLikes&id="+status.id+"&type="+status.type+"&wall_id="+status.wall_id
+             }).success(function(data)
+              {	 
+		       $("#loading_indicator").hide(); //hide loading indicator image		 
+               var modalDefaults = {
+                                    templateUrl: 'loadLikes.html'
+                                   }
+		       var modalOptions = {
+                                   closeButtonText: '{L_CLOSE_WINDOW}',
+                                   headerText: '{L_WALL_LIKE_LIST}',
+                                   users: data,
+                                  }
+                modalService.showModal(modalDefaults, modalOptions); 
+	          });
+       }	
+	  
+       $scope.commentsShow = function(status) {
+        status.showbox = false;
+		status.hidebox = true;       
+       }
+ 
+       $scope.commentsHide = function(status) {
+        status.hidebox = false;
+	    status.showbox = true;      
+       }
+ 	
+       $scope.commentEdit = function(comment) {
+        comment.editing = true;	
+       }
+
+       $scope.cancelComment = function(comment) {
+        _commentResetState(comment);
+       }
+
+       $scope.createComment = function(status) {
+        if (status.commentText) 
+		 {	
+		   $http({
+                 method : "POST",
+                 url : root,
+                 data : "mode=addComment&msg="+status.commentText+"&id="+status.id+"&wall_id="+status.wall_id
+                }).success(function(response) {
+		   	     status.showbox = false;
+		         status.hidebox = true;   
+                 status.commentText = '';
+                 status.comments.push(response);
+			     status.commentsT = response.commentsT;
+			     status.hidebox = response.hidebox;
+                });
+	     }
+       }
+
+       $scope.updateComment = function(comment) {
+	    $http({
+              method : "POST",
+              url : root,
+              data : "mode=editComment&msg="+comment.editable+"&id="+comment.id+"&wall_id="+status.wall_id
+             }).success(function(response) {
+              _commentResetState(comment);
+		      comment.msg = response.msg;
+             });
+       }
+
+       $scope.deleteComment = function(status, comment, index) {
+		 var modalDefaults = {
+                              templateUrl: 'removeActivity.html'
+                             }
+		 var modalOptions = {
+                             closeButtonText: '{L_WALL_CANCEL}',
+                             actionButtonText: '{L_WALL_DELETE}',
+                             headerText: '{L_WALL_COMMENTS_DELETE_INFO}',
+                             avatar: comment.avatar,
+		                     poster: comment.poster,
+		                     time: comment.time,
+		                     msg: comment.msg,
+                            }
+         modalService.showModal(modalDefaults, modalOptions).then(function (result) {
+          if (result === 'ok') 
+		   {
+	        $http({
+                  method : "POST",
+                  url : root,
+                  data :"mode=deleteComment&id="+comment.id+"&id="+status.id+"&wall_id="+status.wall_id
+                 }).success(function(response) {
+	              if(response != false)
+				  {
+                   _commentResetState(comment);
+                   status.comments.splice(index,1);
+			       status.commentsT = response.commentsT;
+			       status.hidebox = response.hidebox;
+	              }
+                 });
+                }
+			});
+       }
+
+      function _commentResetState(comment) {
+       comment.editing = false;
+      }
+
+ 	  // Image Uploader
+	  $scope.setFiles = function(element) {
+       $scope.$apply(function($scope) {
+        console.log('files:', element.files);
+         // Turn the FileList object into an Array
+         $scope.files = []
+         for (var i = 0; i < element.files.length; i++) 
+		 {
+          $scope.files.push(element.files[i])
+         }
+         $scope.progressVisible = false;
+		 $scope.status = "";
+        });
+       }
+
+       $scope.uploadFile = function(Imagemsg) {
+        var fd = new FormData()
+        for (var i in $scope.files) 
+		 {
+          fd.append("ImageFile", $scope.files[i])
+        }
+		fd.append('mode', 'statusImg');
+		fd.append('type', 3);
+		fd.append('msg', Imagemsg);
+		fd.append('wall_id', userid);						
+        var xhr = new XMLHttpRequest()
+        xhr.upload.addEventListener("progress", uploadProgress, false)
+        xhr.addEventListener("load", uploadComplete, false)
+        xhr.addEventListener("error", uploadFailed, false)
+        xhr.addEventListener("abort", uploadCanceled, false)
+        xhr.open("POST", root)
+        $scope.progressVisible = true
+        xhr.send(fd)
+       }
+
+       function uploadProgress(evt) {
+        $scope.$apply(function()
+		{
+         if (evt.lengthComputable) 
+		 {
+          $scope.roundProgressData = 
+		  {
+           label: Math.round(evt.loaded * 100 / evt.total),
+           percentage: "0."+(Math.round(evt.loaded * 100 / evt.total))
+          }
+         } else {
+                 $scope.progress = 'unable to compute'
+                }
+        })
+       }
+
+       function uploadComplete(evt) {
+        $scope.$apply(function()
+		 {
+          var data = jQuery.parseJSON(evt.target.responseText);
+          $scope.clearFile();
+		  $scope.statuses.unshift(data);
+         })
+       }
+
+       $scope.clearFile = function() {
+		$scope.image2 = false;
+        $scope.progressVisible = false;
+		$scope.Imagemsg = '';
+       }
+	
+       function uploadFailed(evt) {
+        alert("There was an error attempting to upload the file.")
+       }
+
+       function uploadCanceled(evt) {
+        $scope.$apply(function()
+		 {
+          $scope.progressVisible = false
+         })
+         alert("The upload has been canceled by the user or the browser dropped the connection.")
+       }
+
+       $scope.navType = 'pills';
+  
+       $scope.openTabs = function(tab) {
+	    $scope.openTab1 = (tab == 1 ? false : true);	
+        $scope.openTab = tab;
+       }
+       // Tabs profile menu	
+       $scope.radioModel = '1';	
+	   // Load Photos
+	   $scope.photosTab = function(tab) {
+       $scope.openTabs(tab);
+       $http({
+              method : "POST",
+              url : root,
+              data : "mode=getPhotos&wall_id="+userid
+             }).success(function(data)
+               {        	  
+                $scope.photos = (data == ('null' || "undefined" ||  null) ? [] : data);	
+               });
+	   }
+	
+	   // Load Music
+	   $scope.musicTab = function(tab) {
+        $scope.openTabs(tab);
+	    $scope.currentDuration = "00:00";
+	    $scope.currentPostion = "00:00";
+        $http({
+               method : "POST",
+               url : root,
+               data : "mode=getMusic&wall_id="+userid
+              }).success(function(data)
+                {	  
+	             $scope.songs = (data == ('null' || "undefined" ||  null) ? [] : data);	
+
+                });	
+       }
+	    //	Upload music
+       $scope.setMusic = function(element) {
+        $scope.$apply(function($scope) {
+         console.log('files:', element.files);
+         // Turn the FileList object into an Array
+        $scope.files = []
+        for (var i = 0; i < element.files.length; i++) {
+         $scope.files.push(element.files[i])
+        }
+        $scope.MusicprogressVisible = false
+        var fd = new FormData()
+        for (var i in $scope.files) 
+	     {
+          fd.append("music", $scope.files[i])
+         }
+  		 fd.append('mode', 'addMusic');
+		 fd.append('wall_id', userid);	      
+         var xhr = new XMLHttpRequest()
+         xhr.upload.addEventListener("progress", MusicuploadProgress, false)
+         xhr.addEventListener("load", MusicuploadComplete, false)
+         xhr.addEventListener("error", MusicuploadFailed, false)
+         xhr.addEventListener("abort", MusicuploadCanceled, false)
+         xhr.open("POST", root)
+         $scope.MusicprogressVisible = true
+         xhr.send(fd)
+        });
+       }
+
+       function MusicuploadProgress(evt) {
+        $scope.$apply(function()
+		 {
+          if (evt.lengthComputable) 
+		   {
+            $scope.Musicprogress = Math.round(evt.loaded * 100 / evt.total)
+           } else {
+                   $scope.Musicprogress = 'unable to compute'
+                  }
+          })
+       }
+
+       function MusicuploadComplete(evt) {
+        $scope.$apply(function()
+		{
+         var data = jQuery.parseJSON(evt.target.responseText);
+         $scope.songs = data;
+         $scope.progress = 100;
+         $scope.MusicprogressVisible = false;
+        })
+       }
+
+       function MusicuploadFailed(evt) {
+        alert("There was an error attempting to upload the file.") 
+	   }
+
+       function MusicuploadCanceled(evt) {
+        $scope.$apply(function(){
+         $scope.MusicprogressVisible = false
+        })
+        alert("The upload has been canceled by the user or the browser dropped the connection.")
+       }
+	
+	   $scope.removeMusic = function(song, index){	
+	    $http({
+               method : "POST",
+               url : root,
+               data : "mode=removeMusic&wall_id="+userid+"&id="+song.id+"&url="+song.name
+              }).success(function(data){
+	                                    $scope.songs.splice(index,1);
+                                       });
+		}
+	
+	   // Load friends
+       $scope.friendsTab = function(tab) {
+        $scope.openTabs(tab);	
+        $http({
+               method : "POST",
+               url : root,
+               data : "mode=loadFriends&wall_id="+userid
+              }).success(function(data)
+                {	  
+                 $scope.friends = (data == ('null' || "undefined" ||  null) ? [] : data);	
+                });
+       }
+	
+	   // Friend request system
+	   $scope.friendAction = function() {
+	    $http({
+               method : "POST",
+               url : root,
+               data : "mode=friendAction&wall_id="+userid
+              }).success(function(data){
+                                        $scope.newAction= true;		
+	                                    $scope.friend_action_icon= data.icon;	
+                                        $scope.friend_action_text= data.text;
+	                                   });
+       }
+	   // accept friend request
+	   $scope.requestAdd = function(index, friend) {
+	    $http({
+               method : "POST",
+               url : root,
+               data : "mode=friendAction&wall_id="+friend.id
+              }).success(function(data){
+	                                    $scope.friendrequest.splice(index,1);
+	
+                                       });
+       }
+       // remove friend request
+	   $scope.requestRemove= function(index, friend) {
+	    $http({
+               method : "POST",
+               url : root,
+               data : "mode=deleteFriend&wall_id="+friend.id
+              }).success(function(data){
+	                                    $scope.friendrequest.splice(index,1);
+                                       });
+       }
+	   // Load friend request
+       if ('{S_ON_WALL}' == true)	
+	    {
+         $http({
+                method : "POST",
+                url : root,
+                data : "mode=friendRequest&wall_id="+userid
+                }).success(function(data)
+                   {	  
+                     $scope.friendrequest = (data == ('null' || "undefined" ||  null) ? [] : data);	
+                   });
+       }
+	   
+	   // Search members
+	   $scope.usersAutocomplete = function(val) {
+   return   $http({
+   method : "POST",
+   url : root,
+   data : "mode=search&string="+val
+    }).then(function(res){
+      var users = [];
+	  var data = (res.data == ('null' || "undefined" ||  null) ? [] : res.data);	
+      angular.forEach(data, function(item){
+        users.push(item);
+      });
+      return users;
+    });
+  };
+     
+	
+       $scope.updateCover = function(){
+	    $http({
+               method : "POST",
+               url : root,
+               data : "mode=getPhotos&wall_id="+userid
+              }).success(function(data)
+               {	  
+                $scope.covers = (data == ('null' || "undefined" ||  null) ? [] : data);			 
+                var modalInstance = $modal.open({
+                                                 templateUrl: 'selectCover.html',
+	                                             windowClass: 'app-modal-select-cover',
+                                                 controller: ModalInstanceCtrl,
+		                                         resolve: {
+		                                         covers: function () {
+                                                                      return $scope.covers;
+                                                                     }
+		                                                   }
+                                                });	
+                 modalInstance.result.then(function (cover) {
+                  $scope.cover = cover;
+	              $('.wall-banner-cancel').removeClass('ng-hide');
+                 });		 
+	            })
+               }
+       
+	           var ModalInstanceCtrl = function ($scope, $modalInstance, covers)  
+			       {
+                    $scope.covers = covers;
+                    $scope.showCover = function (cover) {
+  	                                                     $modalInstance.close(cover);		 
+														}
+                    $scope.cancel = function () {
+                                                 $modalInstance.dismiss('cancel');
+                                                }
+                   }	
+      $scope.newUrl = function(url) {
+       window.location=(url);
+      }
+
+	
+     }
+</script>
+       
+     <!-- start wall angular app -->
+     <div ng-app="wall" id="ng-app">
+      <div ng-controller="wallController" ng-cloak>
+      <!-- start wall angular app -->
+      <!-- INCLUDE modal.html -->

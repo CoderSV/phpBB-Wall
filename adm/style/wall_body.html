@@ -1,0 +1,128 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_ACP_WALL_TITLE}</h1><br /><span>{L_ACP_WALL_SETTINGS_EXPLAIN}</span>
+<br /><br />
+<p>{L_ACP_WALL_VERSION}: <strong>{WALL_VERSION}</strong></p>
+
+<!-- IF WALL_ERROR -->
+	<div class="errorbox"><h3>{L_WARNING}</h3>
+		<p>{WALL_ERROR}</p>
+	</div>
+<!-- ENDIF -->
+
+<form id="acp_board" method="post" action="{U_ACTION}">
+	<!-- IF WALL_MAIN -->  
+    <h1>{L_ACP_WALL_GENERAL}</h1>
+    <fieldset>
+		<dl>
+			<dt><label for="wall_enabled">{L_ACP_WALL_ENABLED}</label></dt>
+			<dd><input type="radio" class="radio" name="wall_enabled" value="1" <!-- IF WALL_ENABLED -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_enabled" value="0" <!-- IF not WALL_ENABLED -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+     </fieldset>
+
+     <fieldset>
+     <legend>{L_ACP_WALL_PROFILE_SETTINGS}</legend>  
+           <dl>
+			<dt><label for="wall_profile">{L_ACP_WALL_PROFILE}</label><br />
+            <span>{L_ACP_WALL_PROFILE_EXPLAIN}</span></dt>
+			<dd><input type="radio" class="radio" name="wall_profile" value="1" <!-- IF WALL_PROFILE -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_profile" value="0" <!-- IF not WALL_PROFILE -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		   </dl>
+           <dl>
+			<dt><label for="wall_music_enabled">{L_ACP_WALL_MUSIC_ENABLED}</label><br />
+			<span>{L_ACP_WALL_MUSIC_ENABLED_EXPLAIN}</span></dt>
+			<dd><input type="radio" class="radio" name="wall_music_enabled" value="1" <!-- IF WALL_MUSIC_ENABLED -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_music_enabled" value="0" <!-- IF not WALL_MUSIC_ENABLED -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		   </dl>
+      </fieldset>  
+      <fieldset>
+       <legend>{L_ACP_WALL_STATUS}</legend>  
+        <dl>
+		 <dt><label for="wall_status_smilies">{L_ACP_WALL_STATUS_SMILIES}</label></dt>
+		 <dd><input type="radio" class="radio" name="wall_status_smilies" value="1" <!-- IF WALL_STATUS_SMILIES -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+		     <input type="radio" class="radio" name="wall_status_smilies" value="0" <!-- IF not WALL_STATUS_SMILIES -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+        <dl>
+		 <dt><label for="wall_status_bbcode">{L_ACP_WALL_STATUS_BBCODE}</label></dt>
+		 <dd><input type="radio" class="radio" name="wall_status_bbcode" value="1" <!-- IF WALL_STATUS_BBCODE -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+		     <input type="radio" class="radio" name="wall_status_bbcode" value="0" <!-- IF not WALL_STATUS_BBCODE -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+        <dl>
+		 <dt><label for="wall_status_url">{L_ACP_WALL_STATUS_URL}</label></dt>
+		 <dd><input type="radio" class="radio" name="wall_status_url" value="1" <!-- IF WALL_STATUS_URL -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+		     <input type="radio" class="radio" name="wall_status_url" value="0" <!-- IF not WALL_STATUS_URL -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>                
+      </fieldset>  
+       <!-- ENDIF -->
+       <!-- IF WALL_CMT -->         
+       <fieldset> 
+       <h1>{L_ACP_WALL_COMMENTS}</h1>
+           <dl>
+			<dt><label for="wall_cmt_edit">{L_ACP_WALL_CMT_EDIT}</label><br />
+            <span>{L_ACP_WALL_CMT_EDIT_EXPLAIN}</span></dt>
+			<dd><input type="radio" class="radio" name="wall_cmt_edit" value="1" <!-- IF WALL_CMT_EDIT -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_cmt_edit" value="0" <!-- IF not WALL_CMT_EDIT -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+        <dl>
+			<dt><label for="wall_cmt_edit_time">{L_ACP_WALL_CMT_EDIT_TIME}:</label><br />
+			<span>{L_ACP_WALL_CMT_EDIT_TIME_EXPLAIN}</span></dt>
+			<dd><input type="text" name="wall_cmt_edit_time" size="10" value="{WALL_CMT_EDIT_TIME}" /></dd>
+		</dl>
+        <dl>
+			<dt><label for="wall_cmt_smilies">{L_ACP_WALL_CMT_SMILIES}</label></dt>
+			<dd><input type="radio" class="radio" name="wall_cmt_smilies" value="1" <!-- IF WALL_CMT_SMILIES -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_cmt_smilies" value="0" <!-- IF not WALL_CMT_SMILIES -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+         <dl>
+			<dt><label for="wall_cmt_bbcode">{L_ACP_WALL_CMT_BBCODE}</label></dt>
+			<dd><input type="radio" class="radio" name="wall_cmt_bbcode" value="1" <!-- IF WALL_CMT_BBCODE -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_cmt_bbcode" value="0" <!-- IF not WALL_CMT_BBCODE -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+         <dl>
+			<dt><label for="wall_cmt_url">{L_ACP_WALL_CMT_URL}</label></dt>
+			<dd><input type="radio" class="radio" name="wall_cmt_url" value="1" <!-- IF WALL_CMT_URL -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_cmt_url" value="0" <!-- IF not WALL_CMT_URL -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>        
+
+      </fieldset>
+    <!-- ENDIF -->
+           <!-- IF WALL_BLOCKS -->         
+       <fieldset> 
+       <h1>{L_ACP_WALL_BLOCKS}</h1>
+       	<dl>
+			<dt><label for="wall_blocks_new_users">{L_ACP_WALL_BLOCKS_NEW_USERS}</label></dt>
+			<dd><input type="radio" class="radio" name="wall_blocks_new_users" value="1" <!-- IF WALL_BLOCKS_NEW_USERS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_blocks_new_users" value="0" <!-- IF not WALL_BLOCKS_NEW_USERS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+        <dl>
+			<dt><label for="wall_blocks_new_users_max">{L_ACP_WALL_BLOCKS_NEW_USERS_MAX}:</label></dt>
+			<dd><input type="text" name="wall_blocks_new_users_max" size="10" value="{WALL_BLOCKS_NEW_USERS_MAX}" /></dd>
+		</dl>
+        
+       	<dl>
+			<dt><label for="wall_blocks_friends_req">{L_ACP_WALL_BLOCKS_FRIENDS_REQ}</label></dt>
+			<dd><input type="radio" class="radio" name="wall_blocks_friends_req" value="1" <!-- IF WALL_BLOCKS_FRIENDS_REQ -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_blocks_friends_req" value="0" <!-- IF not WALL_BLOCKS_FRIENDS_REQ -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+        
+               	<dl>
+			<dt><label for="wall_blocks_latest_topics">{L_ACP_WALL_BLOCKS_LATEST_TOPICS}</label></dt>
+			<dd><input type="radio" class="radio" name="wall_blocks_latest_topics" value="1" <!-- IF WALL_BLOCKS_LATEST_TOPICS -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp;
+				<input type="radio" class="radio" name="wall_blocks_latest_topics" value="0" <!-- IF not WALL_BLOCKS_LATEST_TOPICS -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
+		</dl>
+        <dl>
+			<dt><label for="wall_blocks_latest_topics_max">{L_ACP_WALL_BLOCKS_LATEST_TOPICS_MAX}:</label></dt>
+			<dd><input type="text" name="wall_blocks_latest_topics_max" size="10" value="{WALL_BLOCKS_LATEST_TOPICS_MAX}" /></dd>
+		</dl>      
+
+      </fieldset>
+    <!-- ENDIF -->
+    		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		</p>
+ 	
+    {S_FORM_TOKEN}
+</form>
+<!-- INCLUDE overall_footer.html -->

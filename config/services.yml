@@ -1,0 +1,173 @@
+services:
+    msaulohenrique.wall.controller:
+        class: msaulohenrique\wall\controller\main
+        arguments:
+            - @auth
+            - @config
+            - @dbal.conn
+            - @request
+            - @controller.helper
+            - @msaulohenrique.wall.helper	
+            - @msaulohenrique.wall.wall.status	
+            - @msaulohenrique.wall.wall.comments	
+            - @msaulohenrique.wall.wall.gallery	
+            - @msaulohenrique.wall.wall.zebra	
+            - @msaulohenrique.wall.music.music			
+            - @template
+            - @msaulohenrique.wall.notifyhelper
+            - @user
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%											
+    msaulohenrique.wall.helper:
+        class: msaulohenrique\wall\controller\helper
+        arguments:
+            - @user		
+            - @controller.helper
+            - @config
+            - @dbal.conn
+            - @msaulohenrique.wall.notifyhelper
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%							
+    msaulohenrique.wall.wall.status:
+        class: msaulohenrique\wall\wall\status
+        arguments:
+            - @user		
+            - @controller.helper
+            - @config
+            - @dbal.conn
+            - @msaulohenrique.wall.helper	
+            - @msaulohenrique.wall.wall.comments	
+            - @msaulohenrique.wall.wall.gallery
+            - @msaulohenrique.wall.notifyhelper
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%							
+    msaulohenrique.wall.wall.comments:
+        class: msaulohenrique\wall\wall\comments
+        arguments:
+            - @user		
+            - @controller.helper
+            - @config
+            - @dbal.conn
+            - @msaulohenrique.wall.helper	
+            - @msaulohenrique.wall.wall.gallery
+            - @msaulohenrique.wall.notifyhelper
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%							
+    msaulohenrique.wall.wall.gallery:
+        class: msaulohenrique\wall\wall\gallery
+        arguments:
+            - @user		
+            - @controller.helper
+            - @msaulohenrique.wall.helper
+            - @config
+            - @dbal.conn
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%							
+    msaulohenrique.wall.wall.zebra:
+        class: msaulohenrique\wall\wall\zebra
+        arguments:
+            - @user		
+            - @controller.helper
+            - @msaulohenrique.wall.helper	
+            - @msaulohenrique.wall.wall.gallery
+            - @config
+            - @dbal.conn
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%							
+    msaulohenrique.wall.music.music:
+        class: msaulohenrique\wall\music\music
+        arguments:
+            - @user		
+            - @controller.helper
+            - @msaulohenrique.wall.helper
+            - @config
+            - @dbal.conn
+            - @request
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%		
+    msaulohenrique.wall.listener:
+        class: msaulohenrique\wall\event\main_listener
+        arguments:
+            - @config
+            - @controller.helper	
+            - @template
+            - @user
+            - @dbal.conn
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%		
+        tags:
+            - { name: event.listener }
+    msaulohenrique.wall.notifyhelper:
+        class: msaulohenrique\wall\controller\notifyhelper
+        arguments:
+            - @config
+            - @dbal.conn
+            - @request
+            - @template
+            - @user
+            - @service_container
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+    notification.type.wall_status:
+        class: msaulohenrique\wall\notification\status
+        scope: prototype # scope MUST be prototype for this to work!
+        arguments:
+            - @user_loader
+            - @dbal.conn
+            - @cache.driver
+            - @user
+            - @auth
+            - @config
+            - @controller.helper
+            - %core.root_path%
+            - %core.php_ext%
+            - %tables.notification_types%
+            - %tables.notifications%
+            - %tables.user_notifications%
+        tags:
+            - { name: notification.type }
+    notification.type.wall_comments:
+        class: msaulohenrique\wall\notification\comments
+        scope: prototype # scope MUST be prototype for this to work!
+        arguments:
+            - @user_loader
+            - @dbal.conn
+            - @cache.driver
+            - @user
+            - @auth
+            - @config
+            - @controller.helper
+            - %core.root_path%
+            - %core.php_ext%
+            - %tables.notification_types%
+            - %tables.notifications%
+            - %tables.user_notifications%
+        tags:
+            - { name: notification.type }
+    notification.type.wall_likes:
+        class: msaulohenrique\wall\notification\likes
+        scope: prototype # scope MUST be prototype for this to work!
+        arguments:
+            - @user_loader
+            - @dbal.conn
+            - @cache.driver
+            - @user
+            - @auth
+            - @config
+            - @controller.helper
+            - %core.root_path%
+            - %core.php_ext%
+            - %tables.notification_types%
+            - %tables.notifications%
+            - %tables.user_notifications%
+        tags:
+            - { name: notification.type }

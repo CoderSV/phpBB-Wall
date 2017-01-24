@@ -1,0 +1,27 @@
+ <div class="post bg2 wall-blocks">
+  <div class="forabg wall-blocks-header">
+   <ul class="topiclist">
+    <li class="header">
+	 <dl>
+	  <dt>{L_WALL_LATEST_TOPICS_BLOCK}</dt>
+	 </dl>
+	</li>
+   </ul>
+  </div>
+        		<!-- IF .last_topics -->
+            <marquee behavior="scroll" direction="up" scrolldelay="80" scrollamount="2" loop="true" onmouseover="this.stop()" onmouseout="this.start()">	     
+				<!-- BEGIN last_topics -->
+				<div class="wall-textBlock">
+					<a href="{last_topics.POST_LINK}" title="{last_topics.TOPIC_TITLE}" class="topic_title">{last_topics.TOPIC_TITLE}</a>
+					<span class="wall-timestamp">
+						<span>{last_topics.POST_TIME} · {L_IN}</span>
+						<a href="{last_topics.TOPIC_FORUM_LINK}">{last_topics.TOPIC_FORUM}</a>
+					</span>
+				</div>
+				<!-- END last_topics -->
+                </marquee>
+			<!-- ENDIF -->
+ </div>
+ <p></p>
+ <div class="clear"></div>
+ 

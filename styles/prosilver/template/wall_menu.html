@@ -1,0 +1,16 @@
+   <div class="wall-profile-user">
+    <span class="wall-user-avatar">{S_MY_WALL_AVATAR}</span>
+    <span class="wall-username">{S_USERNAME}<!-- IF S_ONLINE -->&nbsp;<i class="wall-user-online"></i><!-- ENDIF --></span>
+   </div>    
+   <form id="search-form" role="search" class="navbar-form ng-pristine ng-valid">
+    <div class="input-group input-group-sm">
+     <input type="text" ng-model="asyncSelected" placeholder="{L_FIND_USERNAME}" typeahead="user as user.name for user in usersAutocomplete($viewValue) | filter:{name:$viewValue}"  typeahead-loading="loadingUsers" typeahead-template-url="usersAutocomplete.html"  class="form-control inputbox" title="" maxlength="128" >
+	 <div class="input-group-btn">
+	  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+	 </div>
+	</div>
+   </form>
+   <tabset vertical="true" type="navType" class="wall-menu"> 
+    <tab ng-click="newUrl('{U_USER_PROFILE}')" title="{L_READ_PROFILE}"><tab-heading><i class="glyphicon glyphicon-user"></i> {L_READ_PROFILE}</tab-heading></tab>
+    <tab ng-click="newUrl('{U_PROFILE_AVATAR}')" title="{L_UCP_PROFILE_AVATAR}"><tab-heading><i class="glyphicon glyphicon-picture"></i> {L_UCP_PROFILE_AVATAR}</tab-heading></tab>
+   </tabset>

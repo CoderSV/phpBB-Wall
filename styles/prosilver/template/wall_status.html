@@ -1,0 +1,107 @@
+    <!-- IF WALL_IS_FRIEND or S_ON_WALL-->
+   <input ng-hide="true" value="2" type="number" ng-model="userid"/>
+   <div class="wall-composer_box bg1">
+   <div class="wall-statustext-div" auto-grow>
+   
+   <textarea name="submitStatus" ng-show="!image2" ng-model="status.msg" ng-change="urlFetch(status.msg)" class="wall-statustext" placeholder="{L_WALL_STATUS_PH_STATUS}" auto-grow>
+   </textarea>   <textarea name="Imagemsg" ng-show="image2" ng-model="Imagemsg" class="wall-statustext" placeholder="{L_WALL_STATUS_PH_IMG}" auto-grow></textarea> 
+   
+   </div>  
+  <div class="wall-composer-actions">
+  <span class="wall-composer-status glyphicon glyphicon-edit" ng-show="image2" title="{L_WALL_STATUS_POST_STA}" ng-click="clearFile()"></span>
+  <!-- Img uploader start -->
+     <label for="fileToUpload" class="wall-composer-pic glyphicon glyphicon-camera" title="{L_WALL_STATUS_POST_IMG}"></label><br />
+     <input ng-hide="true" type="file" ng-model-instant id="fileToUpload" accept="image/*" image="image2" resize-max-height="200" resize-max-width="200" resize-quality="0.7" onchange="angular.element(this).scope().setFiles(this)" />
+     <div class="wall-image-actions">
+     <div id="wall_fetch_url_results"></div>
+        <img class="wall-image-box" ng-show="image2" ng-src="<[image2.resized.dataURL]>"/>
+       <div class="wall-image-uploader" ng-show="progressVisible" > 
+        <div ang:round:progress data-round-progress-model="roundProgressData"></div>
+       </div>
+      </div>
+       <div ng-show="files">
+   <a href="javascript:void(0);" class="wall-post-button btn-sm button" ng-click="uploadFile(Imagemsg)" ng-hide="!Imagemsg"><i class="glyphicon glyphicon-edit"></i>  {L_WALL_STATUS_POST}</a>     
+     </div>
+      <!-- Img uploader Ends -->
+  <a href="javascript:void(0);" class="wall-post-button btn-sm button" ng-click="addStatus(status)" ng-hide="!status.msg"><i class="glyphicon glyphicon-edit"></i>  {L_WALL_STATUS_POST}</a>
+	
+  </div>  
+  <div class="clear">&nbsp;</div>
+  </div>
+ <!-- ENDIF -->
+
+	  <!-- Statuss -->
+	<div ng-repeat="status in statuses track by $index">
+     <div class="wall_updates" id="<[status.id]>">
+      <div class="wall-statusBox">
+ 	   <div class="wall-status-actions" ng-mouseenter="showS = true" ng-mouseleave="showS = false">
+	    <div class="wall-updates-actions" ng-show="status.mine">
+	    <a href="javascript:void(0);" class="wall-status-delete glyphicon glyphicon-trash" ng-click="deleteStatus(status, $index)" ng-show="showS" title="{L_WALL_DELETE}"></a>
+	    </div>
+        <span class="wall-updates-avatar wall-status-avatar" compile="status.avatar"></span>
+	    <div class="wall-updates-username"><span compile="status.poster"></span></div>
+        <div class="wall-timestamp"><[status.time]></div>
+       </div>
+       
+       <div class="wall-status-textBox">
+        <span class="wall-status-text" compile="status.msg"></span>
+        <div class="wall-status-image" ng-show="status.image"><img src="<[status.image]>" width="100%" height="" /></div>
+       </div> 
+     <div class="wall-status-actionsBox bg1">
+     <span class="wall-status-like"> <a href="javascript:void(0);" ng-click="likeStatus(status)">
+     <i class="glyphicon glyphicon-thumbs-down" ng-show="!status.limg"></i>
+     <i class="glyphicon glyphicon-thumbs-up" ng-show="status.limg"></i>  <[status.ltext]></a></span>
+     <span class="wall-status-likeList" compile="status.likes"></span>
+     </div>
+
+     <!-- start comments block -->
+   <div class="wall-commentsBlock bg2" id="<[status.id]>">
+     <div class="wall-loadComments">
+ <span ng-show="status.showbox"><a href="javascript:void(0);" ng-click="commentsShow(status)"><i class="glyphicon glyphicon-chevron-down"></i>  <[status.commentsT]></a> </span>
+ <span ng-show="status.hidebox"> <a href="javascript:void(0);" ng-click="commentsHide(status)"><i class="glyphicon glyphicon-chevron-up"></i>  {L_WALL_COMMENTS_HIDE}</a> </span>
+ </div>
+   <div class="commentableBox" ng-hide="status.showbox">
+   <div ng-repeat="comment in status.comments">
+   
+	    <div class="wall-commentBlock">
+	    <span class="wall-updates-avatar" compile="comment.avatar"></span>
+	     <div class="wall-commentBox">
+ 	      <div class="wall-comment-actions" ng-mouseenter="showC = true" ng-mouseleave="showC = false">
+	       <div class="wall-updates-actions" ng-show="comment.mine">
+	       <a href="javascript:void(0);" class="wall-comment-delete glyphicon glyphicon-remove" ng-click="deleteComment(status, comment, $index);" ng-show="showC" title="{L_WALL_DELETE}"></a>
+	       </div>
+           <div class="wall-commentText">
+	       <span class="wall-updates-username" compile="comment.poster"></span>
+           <br>
+		   <span class="wall-status-text" compile="comment.msg" ng-hide="comment.editing"></span>
+	        <div ng-show="comment.editing">
+	         <textarea ng-model="comment.editable" placeholder="{L_WALL_COMMENTS_EDIT_PH}" class="wall-inputComment" cols="" rows="" auto-grow></textarea>
+             <div class="wall-comment-button">
+             <button class="btn btn-xs btn-primary" ng-click="updateComment(comment)">{L_WALL_UPDATE}</button>
+             <button class="btn btn-xs btn-warning" ng-click="cancelComment(comment)">{L_WALL_CANCEL}</button>
+             </div>
+	        </div>
+		   </div>
+		   <div class="wall-timestamp" ng-hide="comment.editing">
+           <[comment.time]><span ng-show="comment.canedit"> • <a href="" ng-click="commentEdit(comment)">{L_WALL_EDIT}</a></span>
+           </div>
+          </div>
+	     </div>
+        </div>
+	   </div> 
+	</div> 
+	<br />
+      <div class="wall-shareComment">
+   <textarea name="submitComment" ng-model="status.commentText" class="wall-inputComment" cols="" rows="" placeholder="{L_WALL_COMMENTS_PH}" auto-grow></textarea>
+	<div class="wall-buttonCommentOver">
+    <a href="javascript:void(0);" ng-hide="!status.commentText" class="wall-post-button btn-sm button" ng-click="createComment(status)"><i class="glyphicon glyphicon-comment"></i>  {L_WALL_COMMENTS_POST}</a>
+	</div>
+ </div>
+ 
+    </div>
+     <!-- Ends comments -->
+	</div>
+ </div>
+ <a href="javascript:void(0);" class="wall-loadmore" ng-click="loadMore(status)" ng-show="status.lstatus"><i class="glyphicon glyphicon-refresh"></i>  {L_WALL_MORE}</a> 
+ </div> 
+<div class="clear">&nbsp;</div>
