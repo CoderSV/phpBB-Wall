@@ -1,4 +1,6 @@
 # phpBB 3.1 & 3.2 Extension - phpBB Wall
+[![Build Status](https://travis-ci.org/msaulohenrique/phpBB-Wall.svg?branch=master)](https://travis-ci.org/msaulohenrique/phpBB-Wall)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/msaulohenrique/phpBB-Wall/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/msaulohenrique/phpBB-Wall/?branch=master)
 
 ## Installation
 
