@@ -9,8 +9,14 @@
 	"authors": [{
 			"name": "Saulo Henrique",
 			"email": "",
-			"homepage": "https://suportephpbb.com.br",
+			"homepage": "https://github.com/msaulohenrique",
 			"role": "Lead Developer"
+		},
+		{
+			"name": "Fonzi (fonziset)",
+			"email": "",
+			"homepage": "https://github.com/fonziset",
+			"role": "Developer"
 		}],
 	"require": {
 		"php": ">=5.3.3"
