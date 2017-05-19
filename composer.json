@@ -3,20 +3,26 @@
 	"type": "phpbb-extension",
 	"description": "Wall Extension for phpBB 3.1 & 3.2",
 	"homepage": "https://suportephpbb.com.br",
-	"version": "1.0.0",
-	"time": "2014-01-24",
+	"version": "1.0.1",
+	"time": "2017-05-19",
 	"license": "GPL-2.0",
 	"authors": [{
+			"name": "CoderSV",
+			"email": "",
+			"homepage": "https://github.com/CoderSV",
+			"role": "Author"
+		},
+		{
 			"name": "Saulo Henrique",
 			"email": "",
 			"homepage": "https://github.com/msaulohenrique",
-			"role": "Lead Developer"
+			"role": "Co-Author"
 		},
 		{
 			"name": "Fonzi (fonziset)",
 			"email": "",
 			"homepage": "https://github.com/fonziset",
-			"role": "Developer"
+			"role": "Contributor"
 		}],
 	"require": {
 		"php": ">=5.3.3"
